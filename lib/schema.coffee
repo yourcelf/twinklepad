@@ -29,7 +29,9 @@ load = (config) ->
     }
 
   TwinklePadSchema.pre 'save', (next) ->
-    unless @read_only_pad_id?
+    if @read_only_pad_id?
+      next()
+    else
       # Use the pad_name as the group mapper; one group per pad.
       async.series [
         (done) =>
