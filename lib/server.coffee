@@ -227,7 +227,10 @@ start = (config) ->
         user: req.session.auth?.user_id
         anon_id: req.session.anon_id
         group: doc.sharing?.group_id
-        data: { read_only }
+        data: {
+          title: doc.pad_name
+          action: read_only
+        }
       }, config, (->), 1000 * 60 * 5
 
       doc.sharing = intertwinkles.clean_sharing(req.session, doc)
