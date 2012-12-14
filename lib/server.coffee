@@ -130,10 +130,7 @@ start = (config) ->
         intertwinkles.get_initial_data(req?.session),
         initial_data or {}
       )
-      conf: {
-        api_url: config.intertwinkles.api_url
-        apps: config.intertwinkles.apps
-      }
+      conf: intertwinkles.clean_conf(config)
       flash: req.flash()
     }, obj)
 
@@ -179,7 +176,7 @@ start = (config) ->
     ], (err, results) ->
       return server_error(req, res, err) if err?
       res.render 'index', context(req, {
-        title: "#{config.intertwinkles.apps.twinklepad.name}"
+        title: "#{config.apps.twinklepad.name}"
         is_authenticated: intertwinkles.is_authenticated(req.session)
         listed_pads: {
           public: results[0]
@@ -234,7 +231,7 @@ start = (config) ->
       }, config, (->), 1000 * 60 * 5
 
       doc.sharing = intertwinkles.clean_sharing(req.session, doc)
-      title = "#{req.params.pad_name} | #{config.intertwinkles.apps.twinklepad.name}"
+      title = "#{req.params.pad_name} | #{config.apps.twinklepad.name}"
 
       #
       # Display read only.
@@ -288,7 +285,7 @@ start = (config) ->
             author_name = req.session.users[req.session.auth.user_id].name
             embed_url += "?userName=#{author_name}&userColor=%23#{author_color}"
           res.render "pad", context(req, {
-            title: "#{req.params.pad_name} | #{config.intertwinkles.apps.twinklepad.name}"
+            title: "#{req.params.pad_name} | #{config.apps.twinklepad.name}"
             embed_url: embed_url
             text: null
           }, {
