@@ -14,6 +14,7 @@
   //Ip and port which etherpad should bind at
   "ip": "0.0.0.0",
   "port" : 9005,
+  "transports": ["websocket", "jsonp-polling"],
   
   //The Type of the database. You can choose between dirty, postgres, sqlite and mysql
   //You shouldn't use "dirty" for for anything else than testing or development
